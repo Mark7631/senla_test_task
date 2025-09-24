@@ -15,14 +15,7 @@ public class Session {
         guessedLetters = "";
     }
 
-    public boolean isAlive() {
-        return isAlive;
-    }
-
-    public String getWord() {
-        return word;
-    }
-    public void guess(String letter) {
+    public void guess(String letter) { // обработка буквы пользователя
         lastLetter = letter.charAt(0);
         if (word.contains(letter)) {
             guessedLetters += letter;
@@ -40,13 +33,9 @@ public class Session {
         }
     }
 
-    public boolean isRepeatedLetter(String letter) {
-        return errorLetters.contains(letter) || guessedLetters.contains(letter);
-    }
-
-    public void showState() {
-        String[] state = getGallowsImage();
-        state[1] += "Слово: " + getPartEncryptedWord();
+    public void showState() { // выводим информацию о игре
+        String[] state = getGallowsImage(); // получаем картмнку виселицы взависимости от количества ошибок
+        state[1] += "Слово: " + getPartEncryptedWord(); // дополняем виселицу информацией для пользователя
         state[2] += "Ошибки (" + errorsCounter + "): " + errorLetters;
         state[3] += "Буква: " + lastLetter;
         for (String s : state) {
@@ -96,7 +85,7 @@ public class Session {
         return image;
     }
 
-    public String getPartEncryptedWord() {
+    public String getPartEncryptedWord() { // получаем слова с открытыми угаданными буквами
         StringBuilder stringBuilder = new StringBuilder();
         String[] letters = word.split("");
         for (String letter : letters) {
@@ -113,5 +102,17 @@ public class Session {
         boolean isLose = errorsCounter == 6;
         System.out.printf("Game over, you %s, word: " + word + "\n", (isLose) ? "lose" : "win");
         isAlive = false;
+    }
+
+    public boolean isRepeatedLetter(String letter) {
+        return errorLetters.contains(letter) || guessedLetters.contains(letter);
+    }
+
+    public String getWord() {
+        return word;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
     }
 }
